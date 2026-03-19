@@ -188,45 +188,60 @@
       gap: 12px;
     }
 
-    /* Charts */
+    /* Charts - 优化条形图布局 */
+    .bar-chart {
+      width: 100%;
+    }
     .bar-row {
       flex-direction: row;
       align-items: center;
-      gap: 6px;
+      gap: 4px;
+      margin-bottom: 8px;
     }
     .bar-label {
-      width: 80px;
-      font-size: 0.75em;
+      width: 65px;
+      font-size: 0.7em;
       flex-shrink: 0;
+      text-align: left;
+      line-height: 1.2;
     }
     .bar-track {
-      height: 22px;
+      height: 20px;
       flex: 1;
+      min-width: 0; /* 允许flex子项收缩 */
     }
     .bar-fill {
-      font-size: 0.65em;
-      padding-right: 6px;
+      font-size: 0.6em;
+      padding-right: 4px;
+      white-space: nowrap;
     }
     .bar-value {
-      width: 40px;
-      font-size: 0.75em;
+      width: 32px;
+      font-size: 0.7em;
       flex-shrink: 0;
+      text-align: right;
     }
 
-    /* Tables - 横向滚动 */
+    /* Tables - 优化表格显示 */
     .table-wrapper {
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
-      margin: 0 -15px;
-      padding: 0 15px;
+      margin: 0 -12px;
+      padding: 0 12px;
     }
     .compare-table {
-      font-size: 0.75em;
-      min-width: 500px;
+      font-size: 0.7em;
+      min-width: 100%; /* 允许表格自适应 */
+      width: 100%;
     }
     .compare-table th, .compare-table td {
-      padding: 6px 8px;
-      white-space: nowrap;
+      padding: 5px 6px;
+      white-space: normal; /* 允许文字换行 */
+      word-break: break-word;
+      line-height: 1.3;
+    }
+    .compare-table th {
+      font-size: 0.75em;
     }
 
     /* KPI Cards - 完全重写 */
@@ -260,15 +275,37 @@
       max-height: 180px;
     }
 
-    /* Process Flow - 横向滚动 */
+    /* Process Flow - 改为两列网格布局 */
     .process-flow {
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      padding-bottom: 10px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      overflow-x: visible;
+      padding: 10px 0;
     }
-    .process-step {
-      min-width: 100px;
-      flex-shrink: 0;
+    .flow-step {
+      min-width: auto;
+      flex: none;
+      padding: 10px;
+      background: rgba(255,255,255,0.5);
+      border-radius: 10px;
+      border: 1px solid rgba(0,0,0,0.1);
+    }
+    .flow-step:not(:last-child)::after {
+      display: none; /* 隐藏箭头 */
+    }
+    .flow-icon {
+      width: 40px;
+      height: 40px;
+      font-size: 1.1em;
+    }
+    .flow-step .flow-label {
+      font-size: 0.7em;
+      line-height: 1.3;
+    }
+    .flow-step .flow-desc {
+      font-size: 0.65em;
+      line-height: 1.3;
     }
 
     /* Stacked Bar */
@@ -345,21 +382,52 @@
     
     /* 表格更小 */
     .compare-table {
-      font-size: 0.7em;
-      min-width: 450px;
+      font-size: 0.65em;
+      min-width: 100%;
     }
     .compare-table th, .compare-table td {
-      padding: 5px 6px;
+      padding: 4px 5px;
     }
     
-    /* 条形图 */
+    /* 条形图 - 更紧凑 */
+    .bar-row {
+      gap: 3px;
+      margin-bottom: 6px;
+    }
     .bar-label {
-      width: 70px;
-      font-size: 0.7em;
+      width: 55px;
+      font-size: 0.65em;
+    }
+    .bar-track {
+      height: 18px;
+    }
+    .bar-fill {
+      font-size: 0.55em;
+      padding-right: 3px;
     }
     .bar-value {
+      width: 28px;
+      font-size: 0.65em;
+    }
+    
+    /* 流程图 - 小屏优化 */
+    .process-flow {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+    .flow-step {
+      padding: 8px 5px;
+    }
+    .flow-icon {
       width: 35px;
-      font-size: 0.7em;
+      height: 35px;
+      font-size: 1em;
+    }
+    .flow-step .flow-label {
+      font-size: 0.65em;
+    }
+    .flow-step .flow-desc {
+      font-size: 0.6em;
     }
   }
 
