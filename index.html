@@ -188,9 +188,27 @@
       gap: 12px;
     }
 
-    /* Charts - 优化条形图布局 */
+    /* Charts - 优化条形图布局，确保与表头对齐 */
     .bar-chart {
       width: 100%;
+    }
+    .bar-chart-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 8px;
+      font-size: 0.75em;
+      color: var(--text-light);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 5px;
+    }
+    .bar-chart-header .header-label {
+      width: 75px;
+      flex-shrink: 0;
+      text-align: left;
+    }
+    .bar-chart-header .header-col {
+      flex: 1;
+      text-align: center;
     }
     .bar-row {
       flex-direction: row;
@@ -199,7 +217,7 @@
       margin-bottom: 8px;
     }
     .bar-label {
-      width: 65px;
+      width: 75px;
       font-size: 0.7em;
       flex-shrink: 0;
       text-align: left;
@@ -208,7 +226,8 @@
     .bar-track {
       height: 20px;
       flex: 1;
-      min-width: 0; /* 允许flex子项收缩 */
+      min-width: 0;
+      margin: 0 2px;
     }
     .bar-fill {
       font-size: 0.6em;
@@ -217,12 +236,12 @@
     }
     .bar-value {
       width: 32px;
-      font-size: 0.7em;
+      font-size: 0.65em;
       flex-shrink: 0;
       text-align: right;
     }
 
-    /* Tables - 优化表格显示 */
+    /* Tables - 保留滑动条，确保内容完整显示 */
     .table-wrapper {
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
@@ -230,18 +249,19 @@
       padding: 0 12px;
     }
     .compare-table {
-      font-size: 0.7em;
-      min-width: 100%; /* 允许表格自适应 */
-      width: 100%;
+      font-size: 0.75em;
+      min-width: 600px; /* 确保表格足够宽，需要滑动查看 */
+      width: auto;
     }
     .compare-table th, .compare-table td {
-      padding: 5px 6px;
-      white-space: normal; /* 允许文字换行 */
-      word-break: break-word;
-      line-height: 1.3;
+      padding: 8px 10px;
+      white-space: nowrap; /* 保持内容在一行 */
+      word-break: normal;
+      line-height: 1.4;
     }
     .compare-table th {
-      font-size: 0.75em;
+      font-size: 0.8em;
+      background: var(--light-bg);
     }
 
     /* KPI Cards - 完全重写 */
@@ -275,37 +295,52 @@
       max-height: 180px;
     }
 
-    /* Process Flow - 改为两列网格布局 */
+    /* Process Flow - 改为单列垂直布局 */
     .process-flow {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
       overflow-x: visible;
       padding: 10px 0;
     }
     .flow-step {
       min-width: auto;
       flex: none;
-      padding: 10px;
-      background: rgba(255,255,255,0.5);
+      padding: 12px 15px;
+      background: rgba(255,255,255,0.6);
       border-radius: 10px;
-      border: 1px solid rgba(0,0,0,0.1);
+      border: 1px solid rgba(0,0,0,0.08);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-align: left;
     }
     .flow-step:not(:last-child)::after {
       display: none; /* 隐藏箭头 */
     }
+    .flow-step:not(:last-child) {
+      border-bottom: 2px dashed rgba(0,0,0,0.1);
+      padding-bottom: 12px;
+    }
     .flow-icon {
-      width: 40px;
-      height: 40px;
-      font-size: 1.1em;
+      width: 45px;
+      height: 45px;
+      font-size: 1.2em;
+      flex-shrink: 0;
+    }
+    .flow-content {
+      flex: 1;
+    }
+    .flow-step .flow-title {
+      font-size: 0.9em;
+      font-weight: 600;
+      color: var(--dark);
+      margin-bottom: 2px;
     }
     .flow-step .flow-label {
-      font-size: 0.7em;
+      font-size: 0.75em;
       line-height: 1.3;
-    }
-    .flow-step .flow-desc {
-      font-size: 0.65em;
-      line-height: 1.3;
+      color: var(--text-light);
     }
 
     /* Stacked Bar */
@@ -389,14 +424,26 @@
       padding: 4px 5px;
     }
     
-    /* 条形图 - 更紧凑 */
+    /* 条形图 - 更紧凑但保持对齐 */
+    .bar-chart-header {
+      font-size: 0.6em;
+    }
+    .bar-chart-header .header-label {
+      width: 65px;
+    }
+    .bar-chart-header .header-label[style*="width:85px"] {
+      width: 65px !important;
+    }
     .bar-row {
       gap: 3px;
       margin-bottom: 6px;
     }
     .bar-label {
-      width: 55px;
+      width: 65px;
       font-size: 0.65em;
+    }
+    .bar-label[style*="width:85px"] {
+      width: 65px !important;
     }
     .bar-track {
       height: 18px;
@@ -407,27 +454,27 @@
     }
     .bar-value {
       width: 28px;
-      font-size: 0.65em;
+      font-size: 0.6em;
     }
     
     /* 流程图 - 小屏优化 */
     .process-flow {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 8px;
+      gap: 6px;
     }
     .flow-step {
-      padding: 8px 5px;
+      padding: 10px;
+      gap: 10px;
     }
     .flow-icon {
-      width: 35px;
-      height: 35px;
-      font-size: 1em;
+      width: 40px;
+      height: 40px;
+      font-size: 1.1em;
+    }
+    .flow-step .flow-title {
+      font-size: 0.8em;
     }
     .flow-step .flow-label {
       font-size: 0.65em;
-    }
-    .flow-step .flow-desc {
-      font-size: 0.6em;
     }
   }
 
@@ -773,23 +820,31 @@
           <div class="process-flow">
             <div class="flow-step">
               <div class="flow-icon" style="background:#FFEBEE;">🍽️</div>
-              <div class="flow-title">能量缺口</div>
-              <div class="flow-label">摄入 &lt; 消耗</div>
+              <div class="flow-content">
+                <div class="flow-title">能量缺口</div>
+                <div class="flow-label">摄入 &lt; 消耗</div>
+              </div>
             </div>
             <div class="flow-step">
               <div class="flow-icon" style="background:#FFF3E0;">📉</div>
-              <div class="flow-title">胰岛素↓</div>
-              <div class="flow-label">抑制脂肪合成</div>
+              <div class="flow-content">
+                <div class="flow-title">胰岛素↓</div>
+                <div class="flow-label">抑制脂肪合成</div>
+              </div>
             </div>
             <div class="flow-step">
               <div class="flow-icon" style="background:#FFF8E1;">🔓</div>
-              <div class="flow-title">脂解激活</div>
-              <div class="flow-label">HSL酶激活</div>
+              <div class="flow-content">
+                <div class="flow-title">脂解激活</div>
+                <div class="flow-label">HSL酶激活</div>
+              </div>
             </div>
             <div class="flow-step">
               <div class="flow-icon" style="background:#F3E5F5;">⚡</div>
-              <div class="flow-title">β氧化</div>
-              <div class="flow-label">脂肪酸→ATP</div>
+              <div class="flow-content">
+                <div class="flow-title">β氧化</div>
+                <div class="flow-label">脂肪酸→ATP</div>
+              </div>
             </div>
           </div>
           <div class="insight-box danger">
@@ -802,23 +857,31 @@
           <div class="process-flow">
             <div class="flow-step">
               <div class="flow-icon" style="background:#E8F5E9;">🏋️</div>
-              <div class="flow-title">机械张力</div>
-              <div class="flow-label">肌肉损伤/张力</div>
+              <div class="flow-content">
+                <div class="flow-title">机械张力</div>
+                <div class="flow-label">肌肉损伤/张力</div>
+              </div>
             </div>
             <div class="flow-step">
               <div class="flow-icon" style="background:#E3F2FD;">🔑</div>
-              <div class="flow-title">mTOR激活</div>
-              <div class="flow-label">合成信号通路</div>
+              <div class="flow-content">
+                <div class="flow-title">mTOR激活</div>
+                <div class="flow-label">合成信号通路</div>
+              </div>
             </div>
             <div class="flow-step">
               <div class="flow-icon" style="background:#E8F5E9;">🧬</div>
-              <div class="flow-title">蛋白合成</div>
-              <div class="flow-label">MPS > MPB</div>
+              <div class="flow-content">
+                <div class="flow-title">蛋白合成</div>
+                <div class="flow-label">MPS > MPB</div>
+              </div>
             </div>
             <div class="flow-step">
               <div class="flow-icon" style="background:#F3E5F5;">💪</div>
-              <div class="flow-title">肌纤维增粗</div>
-              <div class="flow-label">卫星细胞参与</div>
+              <div class="flow-content">
+                <div class="flow-title">肌纤维增粗</div>
+                <div class="flow-label">卫星细胞参与</div>
+              </div>
             </div>
           </div>
           <div class="insight-box success">
@@ -1191,13 +1254,13 @@
 
       <div class="css-chart">
         <div class="bar-chart">
-          <div style="display:flex;align-items:center;margin-bottom:8px;font-size:0.85em;color:var(--text-light);">
-            <span style="width:100px;">摄入量 g/kg</span>
-            <span style="flex:1;text-align:center;">增肌效率</span>
-            <span style="flex:1;text-align:center;">减脂保肌</span>
+          <div class="bar-chart-header">
+            <span class="header-label">摄入量g/kg</span>
+            <span class="header-col">增肌效率</span>
+            <span class="header-col">减脂保肌</span>
           </div>
           <div class="bar-row">
-            <div class="bar-label">0.8 (RDA)</div>
+            <div class="bar-label">0.8(RDA)</div>
             <div class="bar-track" style="height:20px;">
               <div class="bar-fill" style="width:20%;background:#4ECDC4;">20%</div>
             </div>
@@ -1306,11 +1369,11 @@
       <h2><span class="icon">🏋️</span>力量训练 vs 有氧训练：代谢影响差异</h2>
 
       <div class="css-chart">
-        <div style="display:flex;align-items:center;margin-bottom:8px;font-size:0.85em;color:var(--text-light);">
-          <span style="width:120px;">训练类型</span>
-          <span style="flex:1;text-align:center;">训练时消耗(kcal/h)</span>
-          <span style="flex:1;text-align:center;">EPOC(kcal/24h)</span>
-          <span style="flex:1;text-align:center;">脂肪供能%</span>
+        <div class="bar-chart-header">
+          <span class="header-label">训练类型</span>
+          <span class="header-col">训练时消耗</span>
+          <span class="header-col">EPOC</span>
+          <span class="header-col">脂肪供能%</span>
         </div>
         <div class="bar-row">
           <div class="bar-label">力量训练</div>
@@ -1440,10 +1503,10 @@
       <h2><span class="icon">📅</span>不同训练方式对身体成分的影响</h2>
 
       <div class="css-chart">
-        <div style="display:flex;align-items:center;margin-bottom:8px;font-size:0.85em;color:var(--text-light);">
-          <span style="width:100px;">训练方式</span>
-          <span style="flex:1;text-align:center;">脂肪变化(kg)</span>
-          <span style="flex:1;text-align:center;">瘦体重变化(kg)</span>
+        <div class="bar-chart-header">
+          <span class="header-label">训练方式</span>
+          <span class="header-col">脂肪变化(kg)</span>
+          <span class="header-col">瘦体重变化(kg)</span>
         </div>
         <div class="bar-row">
           <div class="bar-label">纯有氧组</div>
@@ -1587,14 +1650,14 @@
       <h2><span class="icon">📊</span>分期训练 vs 同步训练效率对比</h2>
 
       <div class="css-chart">
-        <div style="display:flex;align-items:center;margin-bottom:8px;font-size:0.85em;color:var(--text-light);">
-          <span style="width:140px;">策略</span>
-          <span style="flex:1;text-align:center;">6个月净肌肉增量</span>
-          <span style="flex:1;text-align:center;">6个月净脂肪减少</span>
-          <span style="flex:1;text-align:center;">综合满意度</span>
+        <div class="bar-chart-header">
+          <span class="header-label" style="width:85px;">策略</span>
+          <span class="header-col">6个月肌肉增量</span>
+          <span class="header-col">6个月脂肪减少</span>
+          <span class="header-col">综合满意度</span>
         </div>
         <div class="bar-row">
-          <div class="bar-label" style="width:140px;">同步训练</div>
+          <div class="bar-label" style="width:85px;">同步训练</div>
           <div class="bar-track" style="height:24px;">
             <div class="bar-fill" style="width:20%;background:#6C63FF;">0.8kg</div>
           </div>
@@ -1606,7 +1669,7 @@
           </div>
         </div>
         <div class="bar-row">
-          <div class="bar-label" style="width:140px;">分期(3+3月)</div>
+          <div class="bar-label" style="width:85px;">分期(3+3月)</div>
           <div class="bar-track" style="height:24px;">
             <div class="bar-fill" style="width:45%;background:#6C63FF;">1.8kg</div>
           </div>
@@ -1618,7 +1681,7 @@
           </div>
         </div>
         <div class="bar-row">
-          <div class="bar-label" style="width:140px;">纯减脂</div>
+          <div class="bar-label" style="width:85px;">纯减脂</div>
           <div class="bar-track" style="height:24px;">
             <div class="bar-fill" style="width:8%;background:#6C63FF;">-0.3kg</div>
           </div>
