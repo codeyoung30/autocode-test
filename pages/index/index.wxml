@@ -1,0 +1,571 @@
+<view class="container">
+  
+  <!-- 头部 -->
+  <view class="header">
+    <text class="header-title">🔬 减脂 vs 增肌</text>
+    <text class="header-subtitle">新陈代谢系统性分析</text>
+  </view>
+
+  <!-- 导航标签 -->
+  <scroll-view class="nav-tabs" scroll-x enhanced show-scrollbar="{{false}}">
+    <view class="nav-tab-wrapper">
+      <view wx:for="{{tabs}}" wx:key="id" 
+            class="nav-tab {{currentTab === item.id ? 'active' : ''}}"
+            data-id="{{item.id}}"
+            bindtap="switchTab">
+        {{item.icon}} {{item.name}}
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- ===== 代谢机制 ===== -->
+  <view wx:if="{{currentTab === 'metabolism'}}" class="section">
+    
+    <!-- 能量代谢差异 -->
+    <view class="card">
+      <view class="card-header">
+        <text class="card-title">⚗️ 能量代谢的核心差异</text>
+      </view>
+      <text class="card-subtitle">减脂与增肌依赖截然不同的代谢信号通路</text>
+
+      <!-- 减脂路径 -->
+      <text class="section-label">减脂代谢路径</text>
+      <view class="process-flow">
+        <view wx:for="{{fatFlow}}" wx:key="index" class="flow-step">
+          <view class="flow-line" wx:if="{{index > 0}}"></view>
+          <view class="flow-icon" style="background: {{item.bg}};">{{item.icon}}</view>
+          <view class="flow-content">
+            <text class="flow-title">{{item.title}}</text>
+            <text class="flow-desc">{{item.desc}}</text>
+          </view>
+        </view>
+      </view>
+
+      <view class="insight-box danger">
+        <text class="insight-icon">⚠️</text>
+        <text class="insight-text"><text class="bold">减脂关键：</text>胰高血糖素、肾上腺素激活脂解；胰岛素抑制脂解。本质是维持负能量平衡，降低胰岛素基线。</text>
+      </view>
+
+      <!-- 增肌路径 -->
+      <text class="section-label">增肌代谢路径</text>
+      <view class="process-flow">
+        <view wx:for="{{muscleFlow}}" wx:key="index" class="flow-step">
+          <view class="flow-line" wx:if="{{index > 0}}"></view>
+          <view class="flow-icon" style="background: {{item.bg}};">{{item.icon}}</view>
+          <view class="flow-content">
+            <text class="flow-title">{{item.title}}</text>
+            <text class="flow-desc">{{item.desc}}</text>
+          </view>
+        </view>
+      </view>
+
+      <view class="insight-box success">
+        <text class="insight-icon">✅</text>
+        <text class="insight-text"><text class="bold">增肌关键：</text>睾酮、IGF-1、生长激素促进合成；mTOR是核心开关。需要正能量平衡+充足蛋白质+力量训练。</text>
+      </view>
+    </view>
+
+    <!-- 能量底物 -->
+    <view class="card">
+      <view class="card-header">
+        <text class="card-title">📊 能量底物使用优先级</text>
+      </view>
+      <text class="card-subtitle">不同状态下人体优先动用的能量来源</text>
+
+      <view class="bar-chart">
+        <view wx:for="{{substrateData}}" wx:key="index" class="bar-item">
+          <view class="bar-header">
+            <text class="bar-title">{{item.title}}</text>
+            <text class="bar-value">{{item.label}} ({{item.sublabel}})</text>
+          </view>
+          <view class="bar-track">
+            <view class="bar-fill" style="width: {{item.value}}%; background: linear-gradient(90deg, #FF6B6B, #FF8E8E);">{{item.value}}%</view>
+          </view>
+        </view>
+      </view>
+
+      <view class="insight-box info">
+        <text class="insight-icon">ℹ️</text>
+        <text class="insight-text"><text class="bold">RQ呼吸商：</text>判断底物利用的关键指标。RQ≈1.0主要燃烧碳水，RQ≈0.7主要燃烧脂肪。</text>
+      </view>
+    </view>
+
+    <!-- 代谢参数对比 -->
+    <view class="card">
+      <view class="card-header">
+        <text class="card-title">🔄 代谢参数对比</text>
+      </view>
+      
+      <scroll-view class="table-scroll" scroll-x>
+        <view class="table">
+          <view class="table-header">
+            <view class="table-cell">指标</view>
+            <view class="table-cell fat">减脂状态</view>
+            <view class="table-cell muscle">增肌状态</view>
+            <view class="table-cell">说明</view>
+          </view>
+          <view wx:for="{{compareTable}}" wx:key="index" class="table-row">
+            <view class="table-cell">{{item.indicator}}</view>
+            <view class="table-cell fat">{{item.fat}}</view>
+            <view class="table-cell muscle">{{item.muscle}}</view>
+            <view class="table-cell">{{item.note}}</view>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+
+    <!-- 为什么对抗 -->
+    <view class="card">
+      <view class="card-header">
+        <text class="card-title">🧠 为什么两者天然对抗？</text>
+      </view>
+      
+      <view class="kpi-grid">
+        <view wx:for="{{kpiCards}}" wx:key="index" class="kpi-card {{item.theme}}-theme">
+          <text class="kpi-value">{{item.value}}</text>
+          <text class="kpi-label">{{item.label}}</text>
+        </view>
+      </view>
+
+      <view class="insight-box warning">
+        <text class="insight-icon">💡</text>
+        <text class="insight-text"><text class="bold">核心矛盾：</text>AMPK和mTOR是拮抗信号通路。减脂→AMPK↑→mTOR↓→蛋白合成受抑；增肌→胰岛素↑→脂肪合成↑→难以同步减脂。</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- ===== 饮食结构 ===== -->
+  <view wx:if="{{currentTab === 'diet'}}" class="section">
+    
+    <!-- 宏量素比例 -->
+    <view class="card">
+      <view class="card-header">
+        <text class="card-title">🥗 宏量素比例的作用</text>
+      </view>
+      <text class="card-subtitle">总热量 vs 宏量素比例：两者都重要，但权重不同</text>
+
+      <view class="insight-box info">
+        <text class="insight-icon">🔬</text>
+        <text class="insight-text"><text class="bold">科学共识：</text>1.总热量是首要决定因素 2.宏量素比例影响身体成分 3.蛋白质通过多种机制独立影响代谢</text>
+      </view>
+
+      <!-- 减脂方案 -->
+      <text class="section-label">减脂期宏量素方案</text>
+      <view class="macro-bar">
+        <view class="macro-header">
+          <text>高蛋白方案（推荐）</text>
+          <text class="macro-ratio">蛋白30% 碳水40% 脂肪30%</text>
+        </view>
+        <view class="stacked-bar">
+          <view class="stack-segment" style="width: 30%; background: #45B7D1;">蛋白</view>
+          <view class="stack-segment" style="width: 40%; background: #FFA07A;">碳水</view>
+          <view class="stack-segment" style="width: 30%; background: #98D8C8;">脂肪</view>
+        </view>
+      </view>
+
+      <!-- 增肌方案 -->
+      <text class="section-label">增肌期宏量素方案</text>
+      <view class="macro-bar">
+        <view class="macro-header">
+          <text>标准增肌方案</text>
+          <text class="macro-ratio">蛋白25% 碳水50% 脂肪25%</text>
+        </view>
+        <view class="stacked-bar">
+          <view class="stack-segment" style="width: 25%; background: #45B7D1;">蛋白</view>
+          <view class="stack-segment" style="width: 50%; background: #FFA07A;">碳水</view>
+          <view class="stack-segment" style="width: 25%; background: #98D8C8;">脂肪</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 蛋白质 -->
+    <view class="card">
+      <view class="card-header">
+        <text class="card-title">🥩 蛋白质的特殊角色</text>
+      </view>
+
+      <view class="insight-grid">
+        <view class="insight-box success">
+          <text class="insight-icon">🔥</text>
+          <text class="insight-text"><text class="bold">热效应最高</text>
+          消化耗能25-30%，碳水6-8%，脂肪2-3%</text>
+        </view>
+        <view class="insight-box info">
+          <text class="insight-icon">💪</text>
+          <text class="insight-text"><text class="bold">保肌减脂</text>
+          ≥1.6g/kg可将肌肉损失降低60-70%</text>
+        </view>
+        <view class="insight-box warning">
+          <text class="insight-icon">🎯</text>
+          <text class="insight-text"><text class="bold">饱腹感最强</text>
+          刺激饱腹激素，抑制饥饿素</text>
+        </view>
+      </view>
+
+      <text class="section-label">蛋白质摄入量建议</text>
+      <view class="multi-bar-chart">
+        <view wx:for="{{proteinData}}" wx:key="index" class="multi-bar-item">
+          <text class="multi-bar-label">{{item.label}}</text>
+          <view class="multi-bar-track">
+            <view class="multi-bar-fill" style="width: {{item.value}}%; background: {{item.color}};">{{item.value}}%</view>
+          </view>
+        </view>
+      </view>
+      <text class="chart-note">减脂期1.8-2.4g/kg，增肌期1.6-2.2g/kg</text>
+    </view>
+
+    <!-- 碳水化合物 -->
+    <view class="card">
+      <view class="card-header">
+        <text class="card-title">🍚 碳水化合物的定位</text>
+      </view>
+
+      <view class="insight-grid">
+        <view class="insight-box info">
+          <text class="insight-icon">⚡</text>
+          <text class="insight-text"><text class="bold">增肌首选能量</text>
+          糖原是直接燃料，低碳会降低训练质量15-30%</text>
+        </view>
+        <view class="insight-box warning">
+          <text class="insight-icon">📈</text>
+          <text class="insight-text"><text class="bold">胰岛素的两面性</text>
+          训练后碳水+蛋白最大化合成窗口；全天过多阻碍减脂</text>
+        </view>
+      </view>
+
+      <text class="section-label">碳水分配时序</text>
+      <view class="bar-chart">
+        <view class="bar-item">
+          <view class="bar-header">
+            <text class="bar-title">训练前1-2h</text>
+            <text class="bar-value">充能</text>
+          </view>
+          <view class="bar-track">
+            <view class="bar-fill" style="width: 80%; background: #FFA07A;">30%</view>
+          </view>
+        </view>
+        <view class="bar-item">
+          <view class="bar-header">
+            <text class="bar-title">训练后30min</text>
+            <text class="bar-value">恢复</text>
+          </view>
+          <view class="bar-track">
+            <view class="bar-fill" style="width: 65%; background: #FF6B6B;">25%</view>
+          </view>
+        </view>
+        <view class="bar-item">
+          <view class="bar-header">
+            <text class="bar-title">早餐</text>
+            <text class="bar-value">启动</text>
+          </view>
+          <view class="bar-track">
+            <view class="bar-fill" style="width: 55%; background: #45B7D1;">20%</view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 脂肪 -->
+    <view class="card">
+      <view class="card-header">
+        <text class="card-title">🍳 脂肪的角色</text>
+      </view>
+      
+      <scroll-view class="table-scroll" scroll-x>
+        <view class="table">
+          <view class="table-header">
+            <view class="table-cell">类型</view>
+            <view class="table-cell fat">减脂期</view>
+            <view class="table-cell muscle">增肌期</view>
+            <view class="table-cell">建议</view>
+          </view>
+          <view class="table-row">
+            <view class="table-cell">总脂肪</view>
+            <view class="table-cell fat">20-35%热量</view>
+            <view class="table-cell muscle">20-30%热量</view>
+            <view class="table-cell">不低于20%</view>
+          </view>
+          <view class="table-row">
+            <view class="table-cell">Omega-3</view>
+            <view class="table-cell fat">抗炎促氧化</view>
+            <view class="table-cell muscle">激活mTOR</view>
+            <view class="table-cell">2-4g/天</view>
+          </view>
+          <view class="table-row">
+            <view class="table-cell">反式脂肪</view>
+            <view class="table-cell fat" style="color: #C62828;">❌ 避免</view>
+            <view class="table-cell muscle" style="color: #C62828;">❌ 避免</view>
+            <view class="table-cell">均应规避</view>
+          </view>
+        </view>
+      </scroll-view>
+
+      <view class="insight-box danger">
+        <text class="insight-icon">⚠️</text>
+        <text class="insight-text"><text class="bold">极低脂危险：</text>低于15%热量会导致睾酮骤降，损害增肌，影响脂溶性维生素吸收</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- ===== 训练策略 ===== -->
+  <view wx:if="{{currentTab === 'training'}}" class="section">
+    
+    <!-- 训练方式对比 -->
+    <view class="card">
+      <view class="card-header">
+        <text class="card-title">🏋️ 训练方式对比</text>
+      </view>
+
+      <view wx:for="{{trainingCompare}}" wx:key="index" class="training-compare">
+        <text class="training-name">{{item.name}}</text>
+        <view class="compare-bars">
+          <view class="compare-item">
+            <text class="compare-label">消耗</text>
+            <view class="compare-track">
+              <view class="compare-fill" style="width: {{item.burn}}%; background: #6C63FF;">{{item.burnVal}}</view>
+            </view>
+          </view>
+          <view class="compare-item">
+            <text class="compare-label">EPOC</text>
+            <view class="compare-track">
+              <view class="compare-fill" style="width: {{item.epoc}}%; background: #4ECDC4;">{{item.epocVal}}</view>
+            </view>
+          </view>
+          <view class="compare-item">
+            <text class="compare-label">脂肪</text>
+            <view class="compare-track">
+              <view class="compare-fill" style="width: {{item.fat}}%; background: #FF6B6B;">{{item.fatVal}}</view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 身体成分影响 -->
+    <view class="card">
+      <view class="card-header">
+        <text class="card-title">📅 对身体成分的影响</text>
+      </view>
+
+      <view wx:for="{{bodyComp}}" wx:key="index" class="body-comp-item">
+        <view class="comp-header">
+          <text class="comp-name">{{item.name}}</text>
+        </view>
+        <view class="comp-bars">
+          <view class="comp-bar-wrapper">
+            <text class="comp-label">脂肪</text>
+            <view class="comp-track">
+              <view class="comp-fill fat" style="width: {{item.fat}}%;">{{item.fatVal}}</view>
+            </view>
+          </view>
+          <view class="comp-bar-wrapper">
+            <text class="comp-label">肌肉</text>
+            <view class="comp-track">
+              <view class="comp-fill muscle" style="width: {{item.muscle}}%;">{{item.muscleVal}}</view>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <view class="insight-grid">
+        <view class="insight-box success">
+          <text class="insight-icon">🏋️</text>
+          <text class="insight-text"><text class="bold">力量训练</text>
+          最有效增肌，提高BMR长期促减脂</text>
+        </view>
+        <view class="insight-box warning">
+          <text class="insight-icon">🏃</text>
+          <text class="insight-text"><text class="bold">有氧</text>
+          适合减脂，但单独进行会流失肌肉</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- EPOC -->
+    <view class="card">
+      <view class="card-header">
+        <text class="card-title">🔥 EPOC效应对比</text>
+      </view>
+      <text class="card-subtitle">训练后身体持续消耗热量的时间与幅度</text>
+
+      <view class="kpi-grid">
+        <view wx:for="{{epocData}}" wx:key="index" class="kpi-card {{item.theme}}-theme">
+          <text class="kpi-value">{{item.value}}</text>
+          <text class="kpi-label">{{item.label}}</text>
+          <text class="kpi-sublabel">{{item.sublabel}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- ===== 同步vs分开 ===== -->
+  <view wx:if="{{currentTab === 'combined'}}" class="section">
+    
+    <!-- 成功率 -->
+    <view class="card">
+      <view class="card-header">
+        <text class="card-title">⚡ 减脂增肌同步可能吗？</text>
+      </view>
+      <text class="card-subtitle">身体重组（Recomposition）在特定条件下成立</text>
+
+      <text class="section-label">成功率影响因素</text>
+      <view class="bubble-chart">
+        <view class="bubble" style="left: 10%; top: 15%; background: #4ECDC4;">新手65%</view>
+        <view class="bubble" style="left: 40%; top: 35%; background: #45B7D1;">中级40%</view>
+        <view class="bubble" style="left: 70%; top: 60%; background: #FFA07A;">进阶20%</view>
+        <view class="bubble" style="left: 75%; top: 10%; background: #FF6B6B;">高体脂75%</view>
+      </view>
+
+      <view class="bubble-legend">
+        <view class="legend-item"><view class="legend-dot" style="background: #4ECDC4;"></view>新手</view>
+        <view class="legend-item"><view class="legend-dot" style="background: #45B7D1;"></view>中级</view>
+        <view class="legend-item"><view class="legend-dot" style="background: #FFA07A;"></view>进阶</view>
+        <view class="legend-item"><view class="legend-dot" style="background: #FF6B6B;"></view>高体脂</view>
+      </view>
+    </view>
+
+    <!-- 效率对比 -->
+    <view class="card">
+      <view class="card-header">
+        <text class="card-title">📊 分期 vs 同步效率</text>
+      </view>
+
+      <view class="efficiency-compare">
+        <text class="eff-title">同步训练（6个月）</text>
+        <view class="eff-item">
+          <text class="eff-label">肌肉增量</text>
+          <view class="eff-track">
+            <view class="eff-fill" style="width: 20%; background: #6C63FF;">0.8kg</view>
+          </view>
+        </view>
+        <view class="eff-item">
+          <text class="eff-label">脂肪减少</text>
+          <view class="eff-track">
+            <view class="eff-fill" style="width: 38%; background: #FF6B6B;">1.5kg</view>
+          </view>
+        </view>
+        <view class="eff-item">
+          <text class="eff-label">满意度</text>
+          <view class="eff-track">
+            <view class="eff-fill" style="width: 55%; background: #FFA07A;">55%</view>
+          </view>
+        </view>
+      </view>
+
+      <view class="efficiency-compare star">
+        <text class="eff-title">分期训练（3+3月）⭐</text>
+        <view class="eff-item">
+          <text class="eff-label">肌肉增量</text>
+          <view class="eff-track">
+            <view class="eff-fill" style="width: 45%; background: #6C63FF;">1.8kg</view>
+          </view>
+        </view>
+        <view class="eff-item">
+          <text class="eff-label">脂肪减少</text>
+          <view class="eff-track">
+            <view class="eff-fill" style="width: 55%; background: #FF6B6B;">2.2kg</view>
+          </view>
+        </view>
+        <view class="eff-item">
+          <text class="eff-label">满意度</text>
+          <view class="eff-track">
+            <view class="eff-fill" style="width: 78%; background: #4ECDC4;">78%</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- ===== 实操指南 ===== -->
+  <view wx:if="{{currentTab === 'summary'}}" class="section">
+    
+    <!-- 决策树 -->
+    <view class="card">
+      <view class="card-header">
+        <text class="card-title">📋 决策树：选择你的策略</text>
+      </view>
+
+      <view wx:for="{{decisions}}" wx:key="index" class="decision-card" style="border-color: {{item.borderColor}};">
+        <view class="decision-header">
+          <text class="decision-title" style="color: {{item.borderColor}};">{{item.title}}</text>
+          <text class="decision-subtitle">{{item.subtitle}}</text>
+        </view>
+        <view class="tag {{item.tagClass}}">{{item.tag}}</view>
+        <text class="decision-content">{{item.content}}</text>
+      </view>
+    </view>
+
+    <!-- 周计划 -->
+    <view class="card">
+      <view class="card-header">
+        <text class="card-title">🗓️ 实操周计划</text>
+      </view>
+
+      <text class="section-label">减脂期</text>
+      <scroll-view class="plan-scroll" scroll-x>
+        <view class="plan-table">
+          <view class="plan-header">
+            <view class="plan-cell">日期</view>
+            <view class="plan-cell">训练</view>
+            <view class="plan-cell">饮食</view>
+          </view>
+          <view wx:for="{{cutPlan}}" wx:key="index" class="plan-row">
+            <view class="plan-cell">{{item.day}}</view>
+            <view class="plan-cell">{{item.training}}</view>
+            <view class="plan-cell">{{item.diet}}</view>
+          </view>
+        </view>
+      </scroll-view>
+
+      <text class="section-label">增肌期</text>
+      <scroll-view class="plan-scroll" scroll-x>
+        <view class="plan-table">
+          <view class="plan-header">
+            <view class="plan-cell">日期</view>
+            <view class="plan-cell">训练</view>
+            <view class="plan-cell">饮食</view>
+          </view>
+          <view wx:for="{{bulkPlan}}" wx:key="index" class="plan-row">
+            <view class="plan-cell">{{item.day}}</view>
+            <view class="plan-cell">{{item.training}}</view>
+            <view class="plan-cell">{{item.diet}}</view>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+
+    <!-- 营养素速查 -->
+    <view class="card">
+      <view class="card-header">
+        <text class="card-title">💊 关键营养素速查</text>
+      </view>
+      <view class="kpi-grid">
+        <view wx:for="{{nutrients}}" wx:key="index" class="kpi-card {{item.theme}}-theme">
+          <text class="kpi-value">{{item.value}}</text>
+          <text class="kpi-label">{{item.label}}</text>
+          <text class="kpi-sublabel">{{item.sublabel}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 核心结论 -->
+    <view class="card">
+      <view class="card-header">
+        <text class="card-title">🔑 核心结论</text>
+      </view>
+      <view class="conclusion-list">
+        <view wx:for="{{conclusions}}" wx:key="index" class="conclusion-item {{item.type}}">
+          <text class="conclusion-icon">{{item.icon}}</text>
+          <text class="conclusion-text">{{item.text}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部 -->
+  <view class="footer">
+    <text>基于运动生理学与营养学文献综合分析</text>
+    <text>数据仅供参考，建议结合专业指导</text>
+  </view>
+
+</view>

@@ -1,0 +1,1608 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>减脂 vs 增肌：新陈代谢系统性分析报告</title>
+<style>
+  :root {
+    --fat-color: #FF6B6B;
+    --muscle-color: #4ECDC4;
+    --protein-color: #45B7D1;
+    --carb-color: #FFA07A;
+    --fat-macro-color: #98D8C8;
+    --dark: #2C3E50;
+    --light-bg: #F8F9FA;
+    --card-bg: #FFFFFF;
+    --accent: #6C63FF;
+    --text: #333;
+    --text-light: #666;
+    --border: #E0E0E0;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+    color: var(--text);
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .header {
+    text-align: center;
+    color: white;
+    padding: 40px 20px;
+    margin-bottom: 30px;
+  }
+
+  .header h1 {
+    font-size: 2.2em;
+    font-weight: 700;
+    margin-bottom: 10px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  }
+
+  .header p {
+    font-size: 1.1em;
+    opacity: 0.9;
+  }
+
+  .nav-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .nav-tab {
+    padding: 10px 20px;
+    border-radius: 25px;
+    border: 2px solid rgba(255,255,255,0.5);
+    background: rgba(255,255,255,0.15);
+    color: white;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: all 0.3s;
+    backdrop-filter: blur(10px);
+  }
+
+  .nav-tab:hover, .nav-tab.active {
+    background: white;
+    color: var(--accent);
+    border-color: white;
+    font-weight: 600;
+  }
+
+  .section {
+    display: none;
+  }
+
+  .section.active {
+    display: block;
+  }
+
+  .card {
+    background: var(--card-bg);
+    border-radius: 16px;
+    padding: 28px;
+    margin-bottom: 24px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+  }
+
+  .card h2 {
+    font-size: 1.4em;
+    color: var(--dark);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .card h2 .icon { font-size: 1.3em; }
+
+  .card .subtitle {
+    color: var(--text-light);
+    font-size: 0.9em;
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  @media (max-width: 768px) {
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    .header h1 { font-size: 1.5em; }
+  }
+
+  /* CSS Charts */
+  .css-chart {
+    margin: 20px 0;
+  }
+
+  .bar-chart {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .bar-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .bar-label {
+    width: 120px;
+    font-size: 0.85em;
+    color: var(--text-light);
+    text-align: right;
+  }
+
+  .bar-track {
+    flex: 1;
+    height: 28px;
+    background: #f0f0f0;
+    border-radius: 14px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 10px;
+    color: white;
+    font-size: 0.75em;
+    font-weight: 600;
+    transition: width 1s ease;
+  }
+
+  .bar-value {
+    width: 50px;
+    font-size: 0.85em;
+    color: var(--dark);
+    font-weight: 600;
+  }
+
+  /* Stacked bar */
+  .stacked-bar {
+    height: 36px;
+    border-radius: 18px;
+    overflow: hidden;
+    display: flex;
+    margin: 8px 0;
+  }
+
+  .stack-segment {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.72em;
+    font-weight: 600;
+    color: white;
+    transition: all 0.3s;
+  }
+
+  /* Compare Table */
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9em;
+  }
+
+  .compare-table th, .compare-table td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .compare-table thead th {
+    background: var(--light-bg);
+    font-weight: 700;
+    color: var(--dark);
+  }
+
+  .compare-table tbody tr:hover {
+    background: #f0f4ff;
+  }
+
+  .compare-table .fat { color: var(--fat-color); font-weight: 600; }
+  .compare-table .muscle { color: #00897B; font-weight: 600; }
+
+  /* KPI Cards */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .kpi-card {
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .kpi-card.fat-theme { background: linear-gradient(135deg, #FF6B6B20, #FF6B6B40); border: 1px solid #FF6B6B60; }
+  .kpi-card.muscle-theme { background: linear-gradient(135deg, #4ECDC420, #4ECDC440); border: 1px solid #4ECDC460; }
+  .kpi-card.protein-theme { background: linear-gradient(135deg, #45B7D120, #45B7D140); border: 1px solid #45B7D160; }
+  .kpi-card.carb-theme { background: linear-gradient(135deg, #FFA07A20, #FFA07A40); border: 1px solid #FFA07A60; }
+
+  .kpi-card .kpi-value {
+    font-size: 2em;
+    font-weight: 700;
+    color: var(--dark);
+    line-height: 1.2;
+  }
+
+  .kpi-card .kpi-label {
+    font-size: 0.8em;
+    color: var(--text-light);
+    margin-top: 4px;
+    line-height: 1.4;
+  }
+
+  /* Process Flow */
+  .process-flow {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+    overflow-x: auto;
+    padding: 20px 0;
+  }
+
+  .flow-step {
+    flex: 1;
+    min-width: 130px;
+    text-align: center;
+    position: relative;
+  }
+
+  .flow-step:not(:last-child)::after {
+    content: '→';
+    position: absolute;
+    right: -12px;
+    top: 22px;
+    font-size: 1.4em;
+    color: var(--text-light);
+  }
+
+  .flow-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3em;
+    margin: 0 auto 8px;
+  }
+
+  .flow-step .flow-label {
+    font-size: 0.78em;
+    color: var(--text-light);
+    line-height: 1.4;
+  }
+
+  .flow-step .flow-title {
+    font-size: 0.88em;
+    font-weight: 600;
+    color: var(--dark);
+    margin-bottom: 4px;
+  }
+
+  /* Insight boxes */
+  .insight-box {
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin: 12px 0;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .insight-box.warning { background: #FFF3E0; border-left: 4px solid #FF9800; }
+  .insight-box.info { background: #E3F2FD; border-left: 4px solid #2196F3; }
+  .insight-box.success { background: #E8F5E9; border-left: 4px solid #4CAF50; }
+  .insight-box.danger { background: #FFEBEE; border-left: 4px solid #F44336; }
+
+  .insight-box .icon { font-size: 1.4em; flex-shrink: 0; margin-top: 2px; }
+  .insight-box .text { font-size: 0.88em; line-height: 1.7; color: var(--text); }
+  .insight-box strong { color: var(--dark); }
+
+  /* Tags */
+  .tag {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.78em;
+    font-weight: 600;
+    margin: 2px;
+  }
+
+  .tag.red { background: #FFEBEE; color: #C62828; }
+  .tag.green { background: #E8F5E9; color: #1B5E20; }
+  .tag.blue { background: #E3F2FD; color: #0D47A1; }
+  .tag.orange { background: #FFF3E0; color: #E65100; }
+  .tag.purple { background: #F3E5F5; color: #4A148C; }
+
+  /* Section headings */
+  .section-label {
+    font-size: 0.75em;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 20px 0;
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    color: rgba(255,255,255,0.7);
+    font-size: 0.82em;
+    margin-top: 40px;
+    padding: 20px;
+  }
+
+  /* Radar Chart CSS */
+  .radar-container {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  .radar-svg {
+    width: 100%;
+    height: auto;
+  }
+
+  /* Line chart */
+  .line-chart-container {
+    position: relative;
+    height: 200px;
+    margin: 20px 0;
+  }
+
+  .line-chart {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Bubble chart */
+  .bubble-chart {
+    position: relative;
+    height: 280px;
+    background: #f8f9fa;
+    border-radius: 12px;
+    margin: 20px 0;
+  }
+
+  .bubble {
+    position: absolute;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7em;
+    font-weight: 600;
+    color: white;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+  }
+
+  .bubble-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 12px;
+    font-size: 0.85em;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+  }
+
+  /* Cycle chart */
+  .cycle-chart {
+    position: relative;
+    height: 220px;
+    margin: 20px 0;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <h1>🔬 减脂 vs 增肌：新陈代谢系统性分析</h1>
+    <p>从代谢机制、饮食结构到训练策略的科学全景解析</p>
+  </div>
+
+  <div class="nav-tabs">
+    <div class="nav-tab active" onclick="showSection('metabolism')">⚗️ 代谢机制</div>
+    <div class="nav-tab" onclick="showSection('diet')">🥗 饮食结构</div>
+    <div class="nav-tab" onclick="showSection('training')">🏋️ 训练策略</div>
+    <div class="nav-tab" onclick="showSection('combined')">⚡ 同步 vs 分开</div>
+    <div class="nav-tab" onclick="showSection('summary')">📋 实操指南</div>
+  </div>
+
+  <!-- ===== SECTION 1: 代谢机制 ===== -->
+  <div id="metabolism" class="section active">
+
+    <div class="card">
+      <h2><span class="icon">⚗️</span>能量代谢的核心差异</h2>
+      <p class="subtitle">减脂与增肌依赖截然不同的代谢信号通路，理解这两条路径是制定策略的前提。</p>
+
+      <div class="grid-2">
+        <div>
+          <div class="section-label">减脂代谢路径</div>
+          <div class="process-flow">
+            <div class="flow-step">
+              <div class="flow-icon" style="background:#FFEBEE;">🍽️</div>
+              <div class="flow-title">能量缺口</div>
+              <div class="flow-label">摄入 &lt; 消耗</div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-icon" style="background:#FFF3E0;">📉</div>
+              <div class="flow-title">胰岛素↓</div>
+              <div class="flow-label">抑制脂肪合成</div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-icon" style="background:#FFF8E1;">🔓</div>
+              <div class="flow-title">脂解激活</div>
+              <div class="flow-label">HSL酶激活</div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-icon" style="background:#F3E5F5;">⚡</div>
+              <div class="flow-title">β氧化</div>
+              <div class="flow-label">脂肪酸→ATP</div>
+            </div>
+          </div>
+          <div class="insight-box danger">
+            <div class="icon">⚠️</div>
+            <div class="text"><strong>关键激素：</strong>胰高血糖素、肾上腺素、皮质醇激活脂解；胰岛素抑制脂解。<br>减脂本质是维持足够长时间的<strong>负能量平衡</strong>，同时降低胰岛素基线水平。</div>
+          </div>
+        </div>
+        <div>
+          <div class="section-label">增肌代谢路径</div>
+          <div class="process-flow">
+            <div class="flow-step">
+              <div class="flow-icon" style="background:#E8F5E9;">🏋️</div>
+              <div class="flow-title">机械张力</div>
+              <div class="flow-label">肌肉损伤/张力</div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-icon" style="background:#E3F2FD;">🔑</div>
+              <div class="flow-title">mTOR激活</div>
+              <div class="flow-label">合成信号通路</div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-icon" style="background:#E8F5E9;">🧬</div>
+              <div class="flow-title">蛋白合成</div>
+              <div class="flow-label">MPS > MPB</div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-icon" style="background:#F3E5F5;">💪</div>
+              <div class="flow-title">肌纤维增粗</div>
+              <div class="flow-label">卫星细胞参与</div>
+            </div>
+          </div>
+          <div class="insight-box success">
+            <div class="icon">✅</div>
+            <div class="text"><strong>关键激素：</strong>睾酮、IGF-1、生长激素促进合成代谢；mTOR是核心开关。<br>增肌要求<strong>正能量平衡</strong>（或至少能量充足）+ 充足蛋白质 + 力量训练刺激。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><span class="icon">📊</span>能量底物使用优先级对比</h2>
+      <p class="subtitle">不同状态下，人体优先动用的能量来源完全不同。</p>
+
+      <div class="css-chart">
+        <div class="bar-chart">
+          <div class="bar-row">
+            <div class="bar-label">休息状态</div>
+            <div class="bar-track">
+              <div class="bar-fill" style="width:60%;background:linear-gradient(90deg,#FF6B6B,#FF8E8E);">脂肪 60%</div>
+            </div>
+            <div class="bar-value">RQ≈0.75</div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label">低强度有氧</div>
+            <div class="bar-track">
+              <div class="bar-fill" style="width:75%;background:linear-gradient(90deg,#FF6B6B,#FF8E8E);">脂肪 75%</div>
+            </div>
+            <div class="bar-value">RQ≈0.70</div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label">中强度有氧</div>
+            <div class="bar-track">
+              <div class="bar-fill" style="width:55%;background:linear-gradient(90deg,#FF6B6B,#FF8E8E);">脂肪 55%</div>
+            </div>
+            <div class="bar-value">RQ≈0.80</div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label">高强度有氧</div>
+            <div class="bar-track">
+              <div class="bar-fill" style="width:25%;background:linear-gradient(90deg,#FF6B6B,#FF8E8E);">脂肪 25%</div>
+            </div>
+            <div class="bar-value">RQ≈0.95</div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label">力量训练</div>
+            <div class="bar-track">
+              <div class="bar-fill" style="width:20%;background:linear-gradient(90deg,#FF6B6B,#FF8E8E);">脂肪 20%</div>
+            </div>
+            <div class="bar-value">RQ≈0.98</div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label">训练后恢复</div>
+            <div class="bar-track">
+              <div class="bar-fill" style="width:65%;background:linear-gradient(90deg,#FF6B6B,#FF8E8E);">脂肪 65%</div>
+            </div>
+            <div class="bar-value">RQ≈0.72</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:12px;">
+        <div class="insight-box info">
+          <div class="icon">ℹ️</div>
+          <div class="text">
+            <strong>RQ呼吸商（Respiratory Quotient）</strong>是判断底物利用的关键指标：<br>
+            • RQ ≈ 1.0 → 主要燃烧碳水（糖酵解为主）<br>
+            • RQ ≈ 0.7 → 主要燃烧脂肪（β氧化为主）<br>
+            <strong>长时间低强度有氧运动后，脂肪供能比例可达60-80%</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><span class="icon">🔄</span>两种状态下的代谢参数对比</h2>
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>代谢指标</th>
+            <th class="fat">减脂状态</th>
+            <th class="muscle">增肌状态</th>
+            <th>说明</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>能量平衡</td>
+            <td class="fat">负平衡（-300~-500 kcal/天）</td>
+            <td class="muscle">正平衡（+200~+500 kcal/天）</td>
+            <td>最核心的差异</td>
+          </tr>
+          <tr>
+            <td>胰岛素水平</td>
+            <td class="fat">低（促进脂解）</td>
+            <td class="muscle">中高（促进合成）</td>
+            <td>相互对抗的信号</td>
+          </tr>
+          <tr>
+            <td>mTOR活性</td>
+            <td class="fat">受抑（AMPK拮抗）</td>
+            <td class="muscle">高活性</td>
+            <td>AMPK ↑ → mTOR ↓</td>
+          </tr>
+          <tr>
+            <td>蛋白质净合成</td>
+            <td class="fat">接近零或轻微负</td>
+            <td class="muscle">持续正值</td>
+            <td>决定肌肉量变化</td>
+          </tr>
+          <tr>
+            <td>皮质醇</td>
+            <td class="fat">偏高（分解代谢）</td>
+            <td class="muscle">训练后短暂升高</td>
+            <td>慢性高皮质醇损肌</td>
+          </tr>
+          <tr>
+            <td>基础代谢率(BMR)</td>
+            <td class="fat">随体重下降略降</td>
+            <td class="muscle">随肌肉增加升高</td>
+            <td>肌肉是代谢活跃组织</td>
+          </tr>
+          <tr>
+            <td>生长激素脉冲</td>
+            <td class="fat">禁食时升高</td>
+            <td class="muscle">训练后大量分泌</td>
+            <td>睡眠质量影响显著</td>
+          </tr>
+          <tr>
+            <td>脂肪氧化速率</td>
+            <td class="fat">高（主要供能来源）</td>
+            <td class="muscle">低（碳水为主供能）</td>
+            <td>底物利用方向相反</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h2><span class="icon">🧠</span>为什么两者天然对抗？</h2>
+      <div class="kpi-grid">
+        <div class="kpi-card fat-theme">
+          <div class="kpi-value">AMPK</div>
+          <div class="kpi-label">能量感受器<br>能量缺乏时激活<br>抑制mTOR信号</div>
+        </div>
+        <div class="kpi-card muscle-theme">
+          <div class="kpi-value">mTOR</div>
+          <div class="kpi-label">合成代谢核心<br>能量充足时激活<br>促进蛋白合成</div>
+        </div>
+        <div class="kpi-card protein-theme">
+          <div class="kpi-value">胰岛素</div>
+          <div class="kpi-label">双刃激素<br>促肌肉合成 ✅<br>抑制脂肪分解 ❌</div>
+        </div>
+        <div class="kpi-card carb-theme">
+          <div class="kpi-value">皮质醇</div>
+          <div class="kpi-label">分解代谢激素<br>热量亏缺时升高<br>加速肌肉分解</div>
+        </div>
+      </div>
+      <div class="insight-box warning">
+        <div class="icon">💡</div>
+        <div class="text">
+          <strong>核心矛盾：</strong>AMPK 和 mTOR 是互相拮抗的信号通路。<br>
+          减脂（能量亏缺）→ AMPK↑ → mTOR↓ → 蛋白合成受抑<br>
+          增肌（能量盈余）→ 胰岛素↑ → 脂肪合成↑ → 难以同步减脂<br>
+          <strong>这是为什么减脂和增肌在生理机制上存在天然矛盾的根本原因。</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SECTION 2: 饮食结构 ===== -->
+  <div id="diet" class="section">
+
+    <div class="card">
+      <h2><span class="icon">🥗</span>饮食结构（碳氮脂比）的独立作用</h2>
+      <p class="subtitle">总热量 vs 宏量素比例：到底哪个更重要？答案是：<strong>两者都重要，但权重不同</strong>。</p>
+
+      <div class="insight-box info">
+        <div class="icon">🔬</div>
+        <div class="text">
+          <strong>科学共识（2024年主流研究）：</strong><br>
+          1. <strong>总热量（能量平衡）是减脂/增重的首要决定因素</strong>——热力学第一定律，不可绕过<br>
+          2. <strong>宏量素比例影响身体成分（体脂率/肌肉比例）</strong>，在相同热量下可以产生显著差异<br>
+          3. 蛋白质具有特殊地位：<strong>不仅是原材料，还通过多种机制独立影响代谢</strong>
+        </div>
+      </div>
+
+      <div class="grid-2" style="margin-top:20px;">
+        <div>
+          <div class="section-label">减脂期推荐宏量素比例</div>
+          <div style="margin: 16px 0;">
+            <div style="display:flex;justify-content:space-between;font-size:0.85em;margin-bottom:4px;">
+              <span>高蛋白方案（推荐）</span>
+              <span style="color:var(--text-light)">蛋白30% 碳水40% 脂肪30%</span>
+            </div>
+            <div class="stacked-bar">
+              <div class="stack-segment" style="width:30%;background:#45B7D1;">蛋白30%</div>
+              <div class="stack-segment" style="width:40%;background:#FFA07A;">碳水40%</div>
+              <div class="stack-segment" style="width:30%;background:#98D8C8;">脂肪30%</div>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:0.85em;margin:12px 0 4px;">
+              <span>传统方案</span>
+              <span style="color:var(--text-light)">蛋白20% 碳水55% 脂肪25%</span>
+            </div>
+            <div class="stacked-bar">
+              <div class="stack-segment" style="width:20%;background:#45B7D1;">蛋白20%</div>
+              <div class="stack-segment" style="width:55%;background:#FFA07A;">碳水55%</div>
+              <div class="stack-segment" style="width:25%;background:#98D8C8;">脂肪25%</div>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:0.85em;margin:12px 0 4px;">
+              <span>生酮方案</span>
+              <span style="color:var(--text-light)">蛋白25% 碳水5% 脂肪70%</span>
+            </div>
+            <div class="stacked-bar">
+              <div class="stack-segment" style="width:25%;background:#45B7D1;">蛋白25%</div>
+              <div class="stack-segment" style="width:5%;background:#FFA07A;">糖5%</div>
+              <div class="stack-segment" style="width:70%;background:#98D8C8;">脂肪70%</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="section-label">增肌期推荐宏量素比例</div>
+          <div style="margin: 16px 0;">
+            <div style="display:flex;justify-content:space-between;font-size:0.85em;margin-bottom:4px;">
+              <span>标准增肌方案（推荐）</span>
+              <span style="color:var(--text-light)">蛋白25% 碳水50% 脂肪25%</span>
+            </div>
+            <div class="stacked-bar">
+              <div class="stack-segment" style="width:25%;background:#45B7D1;">蛋白25%</div>
+              <div class="stack-segment" style="width:50%;background:#FFA07A;">碳水50%</div>
+              <div class="stack-segment" style="width:25%;background:#98D8C8;">脂肪25%</div>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:0.85em;margin:12px 0 4px;">
+              <span>高蛋白增肌方案</span>
+              <span style="color:var(--text-light)">蛋白30% 碳水50% 脂肪20%</span>
+            </div>
+            <div class="stacked-bar">
+              <div class="stack-segment" style="width:30%;background:#45B7D1;">蛋白30%</div>
+              <div class="stack-segment" style="width:50%;background:#FFA07A;">碳水50%</div>
+              <div class="stack-segment" style="width:20%;background:#98D8C8;">脂肪20%</div>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:0.85em;margin:12px 0 4px;">
+              <span>低碳增肌（非主流）</span>
+              <span style="color:var(--text-light)">蛋白35% 碳水30% 脂肪35%</span>
+            </div>
+            <div class="stacked-bar">
+              <div class="stack-segment" style="width:35%;background:#45B7D1;">蛋白35%</div>
+              <div class="stack-segment" style="width:30%;background:#FFA07A;">碳水30%</div>
+              <div class="stack-segment" style="width:35%;background:#98D8C8;">脂肪35%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><span class="icon">🥩</span>蛋白质：宏量素中的特殊角色</h2>
+
+      <div class="radar-container">
+        <svg class="radar-svg" viewBox="0 0 300 250">
+          <!-- Grid -->
+          <g stroke="#e0e0e0" stroke-width="1" fill="none">
+            <polygon points="150,25 240,90 240,180 150,245 60,180 60,90"/>
+            <polygon points="150,60 210,100 210,170 150,210 90,170 90,100"/>
+            <polygon points="150,95 180,115 180,155 150,175 120,155 120,115"/>
+          </g>
+          <!-- Axes -->
+          <g stroke="#ccc" stroke-width="1">
+            <line x1="150" y1="135" x2="150" y2="25"/>
+            <line x1="150" y1="135" x2="240" y2="90"/>
+            <line x1="150" y1="135" x2="240" y2="180"/>
+            <line x1="150" y1="135" x2="150" y2="245"/>
+            <line x1="150" y1="135" x2="60" y2="180"/>
+            <line x1="150" y1="135" x2="60" y2="90"/>
+          </g>
+          <!-- Labels -->
+          <g font-size="10" fill="#666" text-anchor="middle">
+            <text x="150" y="15">热效应(TEF)</text>
+            <text x="255" y="90">饱腹感</text>
+            <text x="255" y="185">保肌效果</text>
+            <text x="150" y="265">增肌效率</text>
+            <text x="45" y="185">血糖稳定</text>
+            <text x="45" y="90">糖原补充</text>
+          </g>
+          <!-- Protein (95,90,95,85,80,30) -->
+          <polygon points="150,31 234,94 234,176 150,214 78,178 78,94" fill="#45B7D140" stroke="#45B7D1" stroke-width="2"/>
+          <!-- Carb (20,50,20,40,50,95) -->
+          <polygon points="150,108 195,113 195,175 150,165 105,170 105,98" fill="#FFA07A40" stroke="#FFA07A" stroke-width="2" stroke-dasharray="4,2"/>
+          <!-- Fat (8,65,10,15,90,5) -->
+          <polygon points="150,123 159,105 159,147 150,126 69,171 69,91" fill="#98D8C840" stroke="#98D8C8" stroke-width="2" stroke-dasharray="4,2"/>
+          <!-- Legend -->
+          <g font-size="11">
+            <rect x="200" y="215" width="12" height="12" fill="#45B7D1" rx="2"/>
+            <text x="218" y="225" fill="#333">蛋白质</text>
+            <rect x="200" y="230" width="12" height="12" fill="#FFA07A" rx="2"/>
+            <text x="218" y="240" fill="#333">碳水</text>
+          </g>
+        </svg>
+      </div>
+
+      <div class="grid-3" style="margin-top:16px;">
+        <div class="insight-box success">
+          <div class="icon">🔥</div>
+          <div class="text"><strong>热效应（TEF）最高</strong><br>蛋白质消化耗能25-30%，碳水6-8%，脂肪2-3%。每摄入100kcal蛋白质，净获得仅70-75kcal</div>
+        </div>
+        <div class="insight-box info">
+          <div class="icon">💪</div>
+          <div class="text"><strong>保肌减脂</strong><br>热量亏缺下，充足蛋白质（≥1.6g/kg体重）可将肌肉损失降低60-70%，MPS维持在较高水平</div>
+        </div>
+        <div class="insight-box warning">
+          <div class="icon">🎯</div>
+          <div class="text"><strong>饱腹感最强</strong><br>蛋白质刺激PYY、GLP-1等饱腹激素，抑制Ghrelin（饥饿素），有助于维持热量亏缺</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><span class="icon">🍚</span>碳水化合物的定位：减脂不等于低碳</h2>
+      <div class="grid-2">
+        <div>
+          <div class="css-chart">
+            <div style="text-align:center;font-weight:600;color:var(--dark);margin-bottom:12px;">减脂期碳水建议分配时序</div>
+            <div class="bar-chart">
+              <div class="bar-row">
+                <div class="bar-label">训练前1-2h</div>
+                <div class="bar-track">
+                  <div class="bar-fill" style="width:80%;background:linear-gradient(90deg,#FFA07A,#FF8E8E);">充能 30%</div>
+                </div>
+              </div>
+              <div class="bar-row">
+                <div class="bar-label">训练后30min</div>
+                <div class="bar-track">
+                  <div class="bar-fill" style="width:65%;background:linear-gradient(90deg,#FF6B6B,#FF8E8E);">恢复 25%</div>
+                </div>
+              </div>
+              <div class="bar-row">
+                <div class="bar-label">早餐</div>
+                <div class="bar-track">
+                  <div class="bar-fill" style="width:55%;background:linear-gradient(90deg,#45B7D1,#5BC0DE);">启动 20%</div>
+                </div>
+              </div>
+              <div class="bar-row">
+                <div class="bar-label">其余时段</div>
+                <div class="bar-track">
+                  <div class="bar-fill" style="width:35%;background:linear-gradient(90deg,#ddd,#eee);">低碳 25%</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px;justify-content:center;">
+          <div class="insight-box info">
+            <div class="icon">⚡</div>
+            <div class="text"><strong>增肌首选能量来源</strong><br>糖原是高强度力量训练的直接燃料，低碳饮食会导致训练质量下降15-30%，影响肌肉生长刺激</div>
+          </div>
+          <div class="insight-box warning">
+            <div class="icon">📈</div>
+            <div class="text"><strong>胰岛素的两面性</strong><br>训练后碳水+蛋白质搭配可最大化合成代谢窗口；但全天碳水过多会维持高胰岛素，阻碍减脂</div>
+          </div>
+          <div class="insight-box success">
+            <div class="icon">⏰</div>
+            <div class="text"><strong>时序比总量更重要</strong><br>将碳水集中在训练前后摄入，其余时间降低，可同时优化训练效果和脂肪氧化</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><span class="icon">📏</span>蛋白质摄入量的科学建议</h2>
+
+      <div class="css-chart">
+        <div class="bar-chart">
+          <div style="display:flex;align-items:center;margin-bottom:8px;font-size:0.85em;color:var(--text-light);">
+            <span style="width:100px;">摄入量 g/kg</span>
+            <span style="flex:1;text-align:center;">增肌效率</span>
+            <span style="flex:1;text-align:center;">减脂保肌</span>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label">0.8 (RDA)</div>
+            <div class="bar-track" style="height:20px;">
+              <div class="bar-fill" style="width:20%;background:#4ECDC4;">20%</div>
+            </div>
+            <div class="bar-track" style="height:20px;margin-left:8px;">
+              <div class="bar-fill" style="width:30%;background:#45B7D1;">30%</div>
+            </div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label">1.2</div>
+            <div class="bar-track" style="height:20px;">
+              <div class="bar-fill" style="width:55%;background:#4ECDC4;">55%</div>
+            </div>
+            <div class="bar-track" style="height:20px;margin-left:8px;">
+              <div class="bar-fill" style="width:60%;background:#45B7D1;">60%</div>
+            </div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label">1.6 ✓</div>
+            <div class="bar-track" style="height:24px;">
+              <div class="bar-fill" style="width:88%;background:#4ECDC4;">88%</div>
+            </div>
+            <div class="bar-track" style="height:24px;margin-left:8px;">
+              <div class="bar-fill" style="width:88%;background:#45B7D1;">88%</div>
+            </div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label">2.0 ✓</div>
+            <div class="bar-track" style="height:28px;">
+              <div class="bar-fill" style="width:99%;background:#4ECDC4;">99%</div>
+            </div>
+            <div class="bar-track" style="height:28px;margin-left:8px;">
+              <div class="bar-fill" style="width:99%;background:#45B7D1;">99%</div>
+            </div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label">2.4+</div>
+            <div class="bar-track" style="height:20px;">
+              <div class="bar-fill" style="width:100%;background:#4ECDC4;">100%</div>
+            </div>
+            <div class="bar-track" style="height:20px;margin-left:8px;">
+              <div class="bar-fill" style="width:100%;background:#45B7D1;">100%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:12px;" class="insight-box warning">
+        <div class="icon">📌</div>
+        <div class="text">
+          <strong>蛋白质摄入上限：</strong>超过2.4-3.1g/kg/天后，额外蛋白质对增肌的边际效益趋近于零，多余部分被氧化供能或转化为葡萄糖（糖异生）。<br>
+          <strong>最优区间：减脂期1.8-2.4g/kg，增肌期1.6-2.2g/kg</strong>（相对体重）
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><span class="icon">🍳</span>脂肪的角色：不可忽视的基础</h2>
+      <table class="compare-table">
+        <thead>
+          <tr><th>脂肪类型</th><th>减脂期作用</th><th>增肌期作用</th><th>建议摄入</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>总脂肪摄入</td>
+            <td class="fat">占总热量20-35%，不宜过低</td>
+            <td class="muscle">占总热量20-30%</td>
+            <td>最低不低于总热量20%</td>
+          </tr>
+          <tr>
+            <td>饱和脂肪酸</td>
+            <td class="fat">限制 &lt;10%热量</td>
+            <td class="muscle">支持睾酮合成，≤10%</td>
+            <td>适量，来自天然食物</td>
+          </tr>
+          <tr>
+            <td>Omega-3（EPA/DHA）</td>
+            <td class="fat">抗炎，促进脂肪氧化</td>
+            <td class="muscle">激活mTOR，抗炎抗分解</td>
+            <td>2-4g/天，鱼油补充</td>
+          </tr>
+          <tr>
+            <td>单不饱和脂肪</td>
+            <td class="fat">改善胰岛素敏感性</td>
+            <td class="muscle">心血管保护，激素合成</td>
+            <td>橄榄油、坚果为优选</td>
+          </tr>
+          <tr>
+            <td>反式脂肪</td>
+            <td class="fat" style="color:#C62828;">❌ 避免</td>
+            <td class="muscle" style="color:#C62828;">❌ 避免</td>
+            <td>任何情况均应规避</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="insight-box danger">
+        <div class="icon">⚠️</div>
+        <div class="text"><strong>极低脂饮食的危险：</strong>脂肪低于总热量15%会导致睾酮、雌激素等合成代谢激素水平骤降，严重损害增肌能力，并影响脂溶性维生素（A/D/E/K）的吸收。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SECTION 3: 训练策略 ===== -->
+  <div id="training" class="section">
+
+    <div class="card">
+      <h2><span class="icon">🏋️</span>力量训练 vs 有氧训练：代谢影响差异</h2>
+
+      <div class="css-chart">
+        <div style="display:flex;align-items:center;margin-bottom:8px;font-size:0.85em;color:var(--text-light);">
+          <span style="width:120px;">训练类型</span>
+          <span style="flex:1;text-align:center;">训练时消耗(kcal/h)</span>
+          <span style="flex:1;text-align:center;">EPOC(kcal/24h)</span>
+          <span style="flex:1;text-align:center;">脂肪供能%</span>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">力量训练</div>
+          <div class="bar-track" style="height:22px;">
+            <div class="bar-fill" style="width:56%;background:#6C63FF;">450</div>
+          </div>
+          <div class="bar-track" style="height:22px;margin-left:8px;">
+            <div class="bar-fill" style="width:24%;background:#4ECDC4;">120</div>
+          </div>
+          <div class="bar-track" style="height:22px;margin-left:8px;">
+            <div class="bar-fill" style="width:25%;background:#FF6B6B;">25%</div>
+          </div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">HIIT</div>
+          <div class="bar-track" style="height:22px;">
+            <div class="bar-fill" style="width:75%;background:#6C63FF;">600</div>
+          </div>
+          <div class="bar-track" style="height:22px;margin-left:8px;">
+            <div class="bar-fill" style="width:40%;background:#4ECDC4;">200</div>
+          </div>
+          <div class="bar-track" style="height:22px;margin-left:8px;">
+            <div class="bar-fill" style="width:35%;background:#FF6B6B;">35%</div>
+          </div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">中强度有氧</div>
+          <div class="bar-track" style="height:22px;">
+            <div class="bar-fill" style="width:60%;background:#6C63FF;">480</div>
+          </div>
+          <div class="bar-track" style="height:22px;margin-left:8px;">
+            <div class="bar-fill" style="width:10%;background:#4ECDC4;">50</div>
+          </div>
+          <div class="bar-track" style="height:22px;margin-left:8px;">
+            <div class="bar-fill" style="width:55%;background:#FF6B6B;">55%</div>
+          </div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">低强度有氧</div>
+          <div class="bar-track" style="height:22px;">
+            <div class="bar-fill" style="width:38%;background:#6C63FF;">300</div>
+          </div>
+          <div class="bar-track" style="height:22px;margin-left:8px;">
+            <div class="bar-fill" style="width:4%;background:#4ECDC4;">20</div>
+          </div>
+          <div class="bar-track" style="height:22px;margin-left:8px;">
+            <div class="bar-fill" style="width:68%;background:#FF6B6B;">68%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><span class="icon">🔥</span>EPOC效应：训练后过量氧耗</h2>
+      <p class="subtitle">训练结束后身体持续消耗热量的时间与幅度，是选择训练方式的重要依据。</p>
+
+      <div class="grid-2">
+        <div>
+          <div class="css-chart">
+            <div style="text-align:center;font-weight:600;color:var(--dark);margin-bottom:12px;">EPOC随时间衰减曲线（kcal/h）</div>
+            <div style="position:relative;height:180px;background:#f8f9fa;border-radius:8px;padding:10px;">
+              <!-- SVG Line Chart -->
+              <svg width="100%" height="100%" viewBox="0 0 400 160" preserveAspectRatio="none">
+                <!-- Grid -->
+                <g stroke="#e0e0e0" stroke-width="1">
+                  <line x1="40" y1="10" x2="40" y2="140"/>
+                  <line x1="40" y1="140" x2="390" y2="140"/>
+                  <line x1="40" y1="105" x2="390" y2="105"/>
+                  <line x1="40" y1="70" x2="390" y2="70"/>
+                  <line x1="40" y1="35" x2="390" y2="35"/>
+                </g>
+                <!-- Y Labels -->
+                <g font-size="10" fill="#666">
+                  <text x="30" y="145" text-anchor="end">0</text>
+                  <text x="30" y="110" text-anchor="end">50</text>
+                  <text x="30" y="75" text-anchor="end">100</text>
+                  <text x="30" y="40" text-anchor="end">150</text>
+                </g>
+                <!-- X Labels -->
+                <g font-size="10" fill="#666" text-anchor="middle">
+                  <text x="40" y="155">0h</text>
+                  <text x="130" y="155">12h</text>
+                  <text x="220" y="155">24h</text>
+                  <text x="310" y="155">36h</text>
+                  <text x="390" y="155">48h</text>
+                </g>
+                <!-- HIIT Line -->
+                <path d="M40,35 Q100,70 130,105 Q180,130 220,140" fill="none" stroke="#FF6B6B" stroke-width="2"/>
+                <!-- Strength Line -->
+                <path d="M40,45 Q150,80 220,110 Q300,130 390,135" fill="none" stroke="#4ECDC4" stroke-width="2"/>
+                <!-- Moderate Cardio -->
+                <path d="M40,105 Q80,120 130,135 Q180,140 220,140" fill="none" stroke="#FFA07A" stroke-width="2" stroke-dasharray="4,2"/>
+              </svg>
+              <!-- Legend -->
+              <div style="position:absolute;top:10px;right:10px;font-size:11px;background:rgba(255,255,255,0.9);padding:8px;border-radius:6px;">
+                <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;"><span style="width:20px;height:3px;background:#FF6B6B;"></span>HIIT</div>
+                <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;"><span style="width:20px;height:3px;background:#4ECDC4;"></span>力量训练</div>
+                <div style="display:flex;align-items:center;gap:6px;"><span style="width:20px;height:3px;background:#FFA07A;"></span>中强度有氧</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px;justify-content:center;">
+          <div class="kpi-grid" style="grid-template-columns:1fr 1fr;">
+            <div class="kpi-card fat-theme">
+              <div class="kpi-value">200~</div>
+              <div class="kpi-label">HIIT训练后额外消耗 (kcal)<br>EPOC持续6-24小时</div>
+            </div>
+            <div class="kpi-card muscle-theme">
+              <div class="kpi-value">100~</div>
+              <div class="kpi-label">力量训练后额外消耗 (kcal)<br>EPOC持续24-48小时</div>
+            </div>
+            <div class="kpi-card protein-theme">
+              <div class="kpi-value">50~</div>
+              <div class="kpi-label">中强度有氧训练后额外消耗<br>EPOC持续1-3小时</div>
+            </div>
+            <div class="kpi-card carb-theme">
+              <div class="kpi-value">25~</div>
+              <div class="kpi-label">低强度有氧训练后额外消耗<br>EPOC持续约30分钟</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><span class="icon">📅</span>不同训练方式对身体成分的影响</h2>
+
+      <div class="css-chart">
+        <div style="display:flex;align-items:center;margin-bottom:8px;font-size:0.85em;color:var(--text-light);">
+          <span style="width:100px;">训练方式</span>
+          <span style="flex:1;text-align:center;">脂肪变化(kg)</span>
+          <span style="flex:1;text-align:center;">瘦体重变化(kg)</span>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">纯有氧组</div>
+          <div class="bar-track" style="height:24px;">
+            <div class="bar-fill" style="width:70%;background:#FF6B6B;">-3.5kg</div>
+          </div>
+          <div class="bar-track" style="height:24px;margin-left:8px;">
+            <div class="bar-fill" style="width:15%;background:#4ECDC4;">-0.5kg</div>
+          </div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">纯力量组</div>
+          <div class="bar-track" style="height:24px;">
+            <div class="bar-fill" style="width:30%;background:#FF6B6B;">-1.5kg</div>
+          </div>
+          <div class="bar-track" style="height:24px;margin-left:8px;">
+            <div class="bar-fill" style="width:85%;background:#4ECDC4;">+2.8kg</div>
+          </div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">力量+有氧</div>
+          <div class="bar-track" style="height:24px;">
+            <div class="bar-fill" style="width:84%;background:#FF6B6B;">-4.2kg</div>
+          </div>
+          <div class="bar-track" style="height:24px;margin-left:8px;">
+            <div class="bar-fill" style="width:65%;background:#4ECDC4;">+2.2kg</div>
+          </div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">HIIT组</div>
+          <div class="bar-track" style="height:24px;">
+            <div class="bar-fill" style="width:76%;background:#FF6B6B;">-3.8kg</div>
+          </div>
+          <div class="bar-track" style="height:24px;margin-left:8px;">
+            <div class="bar-fill" style="width:25%;background:#4ECDC4;">+0.8kg</div>
+          </div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">不运动(节食)</div>
+          <div class="bar-track" style="height:24px;">
+            <div class="bar-fill" style="width:80%;background:#FF6B6B;">-4.0kg</div>
+          </div>
+          <div class="bar-track" style="height:24px;margin-left:8px;">
+            <div class="bar-fill" style="width:70%;background:#FF6B6B;">-2.5kg</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-3" style="margin-top:16px;">
+        <div class="insight-box success">
+          <div class="icon">🏋️</div>
+          <div class="text"><strong>力量训练</strong><br>最有效的增肌方式，同时通过提高BMR长期促进减脂，在热量亏缺下可最大程度保肌</div>
+        </div>
+        <div class="insight-box warning">
+          <div class="icon">🏃</div>
+          <div class="text"><strong>中低强度有氧</strong><br>训练期间脂肪供能比例高，适合减脂，但长期单独进行会导致肌肉流失（尤其高量有氧）</div>
+        </div>
+        <div class="insight-box info">
+          <div class="icon">⚡</div>
+          <div class="text"><strong>HIIT高强度间歇</strong><br>单位时间热量消耗最高，EPOC效果好，对肌肉保留比传统有氧好，但恢复需求大</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SECTION 4: 同步 vs 分开 ===== -->
+  <div id="combined" class="section">
+
+    <div class="card">
+      <h2><span class="icon">⚡</span>减脂增肌同步（Body Recomposition）：可能吗？</h2>
+      <p class="subtitle">身体重组（Recomp）：同时减少体脂、增加肌肉——这在科学上是有条件成立的。</p>
+
+      <div class="bubble-chart" id="bubbleChart">
+        <!-- X轴: 体脂率 5-45%, Y轴: 成功率 0-90% -->
+        <div class="bubble" style="left:50%;top:28%;width:72px;height:72px;background:#4ECDC4;opacity:0.8;">新手<br>65%</div>
+        <div class="bubble" style="left:44%;top:22%;width:64px;height:64px;background:#4ECDC4;opacity:0.8;">新手<br>70%</div>
+        <div class="bubble" style="left:56%;top:33%;width:56px;height:56px;background:#4ECDC4;opacity:0.8;">新手<br>60%</div>
+
+        <div class="bubble" style="left:32%;top:55%;width:56px;height:56px;background:#45B7D1;opacity:0.8;">中级<br>40%</div>
+        <div class="bubble" style="left:25%;top:61%;width:48px;height:48px;background:#45B7D1;opacity:0.8;">中级<br>35%</div>
+        <div class="bubble" style="left:38%;top:53%;width:40px;height:40px;background:#45B7D1;opacity:0.8;">中级<br>42%</div>
+
+        <div class="bubble" style="left:18%;top:77%;width:40px;height:40px;background:#FFA07A;opacity:0.8;">进阶<br>20%</div>
+        <div class="bubble" style="left:22%;top:80%;width:32px;height:32px;background:#FFA07A;opacity:0.8;">进阶<br>18%</div>
+        <div class="bubble" style="left:12%;top:75%;width:32px;height:32px;background:#FFA07A;opacity:0.8;">进阶<br>22%</div>
+
+        <div class="bubble" style="left:75%;top:25%;width:80px;height:80px;background:#FF6B6B;opacity:0.8;">高体脂<br>75%</div>
+        <div class="bubble" style="left:62%;top:28%;width:72px;height:72px;background:#FF6B6B;opacity:0.8;">高体脂<br>72%</div>
+
+        <!-- Axis labels -->
+        <div style="position:absolute;bottom:5px;left:50%;transform:translateX(-50%);font-size:11px;color:#666;">初始体脂率 (%) →</div>
+        <div style="position:absolute;left:5px;top:50%;transform:translateY(-50%) rotate(-90deg);font-size:11px;color:#666;">同步成功率 (%) →</div>
+      </div>
+
+      <div class="bubble-legend">
+        <div class="legend-item"><div class="legend-dot" style="background:#4ECDC4;"></div>新手（&lt;1年训练）</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#45B7D1;"></div>中级（1-3年）</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#FFA07A;"></div>进阶（3年+）</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#FF6B6B;"></div>高体脂者（体脂&gt;25%）</div>
+      </div>
+
+      <div class="grid-2" style="margin-top:20px;">
+        <div>
+          <div class="section-label">有利于同步的条件</div>
+          <div style="margin-top:10px;">
+            <div class="insight-box success" style="margin-bottom:8px;">
+              <div class="icon">✅</div>
+              <div class="text"><strong>训练新手（前6-12个月）</strong><br>神经适应强烈，肌肉对刺激极度敏感，即使在热量亏缺下仍可显著增肌（"新手福利"）</div>
+            </div>
+            <div class="insight-box success" style="margin-bottom:8px;">
+              <div class="icon">✅</div>
+              <div class="text"><strong>体脂率偏高者（男≥20%，女≥28%）</strong><br>脂肪储量大，脂肪酸可作为肌肉蛋白合成的间接能量来源，AMPK/mTOR信号矛盾减弱</div>
+            </div>
+            <div class="insight-box success">
+              <div class="icon">✅</div>
+              <div class="text"><strong>使用过激素/停药复训者</strong><br>肌肉记忆（Muscle Memory）效应，卫星细胞核数量保留，重建速率远超正常水平</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="section-label">不利于同步的条件</div>
+          <div style="margin-top:10px;">
+            <div class="insight-box danger" style="margin-bottom:8px;">
+              <div class="icon">❌</div>
+              <div class="text"><strong>高水平训练者（2+年系统训练）</strong><br>神经适应已充分，肌肉增长接近遗传上限，需要更大的合成代谢刺激才能继续进步</div>
+            </div>
+            <div class="insight-box danger" style="margin-bottom:8px;">
+              <div class="icon">❌</div>
+              <div class="text"><strong>热量亏缺过大（>500kcal/天）</strong><br>皮质醇显著升高，蛋白质分解加速，AMPK过度激活完全抑制mTOR，肌肉净损失</div>
+            </div>
+            <div class="insight-box danger">
+              <div class="icon">❌</div>
+              <div class="text"><strong>蛋白质摄入不足或训练量不够</strong><br>任何一个条件缺失，身体重组的效率都将大幅下降，最终只是"减重"而非"改善体型"</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><span class="icon">📊</span>分期训练 vs 同步训练效率对比</h2>
+
+      <div class="css-chart">
+        <div style="display:flex;align-items:center;margin-bottom:8px;font-size:0.85em;color:var(--text-light);">
+          <span style="width:140px;">策略</span>
+          <span style="flex:1;text-align:center;">6个月净肌肉增量</span>
+          <span style="flex:1;text-align:center;">6个月净脂肪减少</span>
+          <span style="flex:1;text-align:center;">综合满意度</span>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label" style="width:140px;">同步训练</div>
+          <div class="bar-track" style="height:24px;">
+            <div class="bar-fill" style="width:20%;background:#6C63FF;">0.8kg</div>
+          </div>
+          <div class="bar-track" style="height:24px;margin-left:8px;">
+            <div class="bar-fill" style="width:38%;background:#FF6B6B;">1.5kg</div>
+          </div>
+          <div class="bar-track" style="height:24px;margin-left:8px;">
+            <div class="bar-fill" style="width:55%;background:#FFA07A;">55%</div>
+          </div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label" style="width:140px;">分期(3+3月)</div>
+          <div class="bar-track" style="height:24px;">
+            <div class="bar-fill" style="width:45%;background:#6C63FF;">1.8kg</div>
+          </div>
+          <div class="bar-track" style="height:24px;margin-left:8px;">
+            <div class="bar-fill" style="width:55%;background:#FF6B6B;">2.2kg</div>
+          </div>
+          <div class="bar-track" style="height:24px;margin-left:8px;">
+            <div class="bar-fill" style="width:78%;background:#4ECDC4;">78%</div>
+          </div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label" style="width:140px;">纯减脂</div>
+          <div class="bar-track" style="height:24px;">
+            <div class="bar-fill" style="width:8%;background:#6C63FF;">-0.3kg</div>
+          </div>
+          <div class="bar-track" style="height:24px;margin-left:8px;">
+            <div class="bar-fill" style="width:88%;background:#FF6B6B;">3.5kg</div>
+          </div>
+          <div class="bar-track" style="height:24px;margin-left:8px;">
+            <div class="bar-fill" style="width:50%;background:#FFA07A;">50%</div>
+          </div>
+        </div>
+      </div>
+
+      <table class="compare-table" style="margin-top:20px;">
+        <thead>
+          <tr>
+            <th>维度</th>
+            <th style="color:#6C63FF;">同步训练（Recomp）</th>
+            <th style="color:#FF6B6B;">减脂期</th>
+            <th style="color:#4ECDC4;">增肌期（Bulk）</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>适用人群</td>
+            <td>新手、高体脂、停训复训者</td>
+            <td>体脂偏高、赛前备赛</td>
+            <td>体脂适中（男10-15%）、进阶训练者</td>
+          </tr>
+          <tr>
+            <td>能量策略</td>
+            <td>±0～轻微亏缺（-100~-200kcal）</td>
+            <td>亏缺（-300~-500kcal）</td>
+            <td>盈余（+200~+400kcal）</td>
+          </tr>
+          <tr>
+            <td>减脂速度</td>
+            <td>慢（每月约0.5-1%体脂）</td>
+            <td>快（每月约0.5-1kg脂肪）</td>
+            <td>几乎不减脂</td>
+          </tr>
+          <tr>
+            <td>增肌速度</td>
+            <td>慢（约正常速度的30-50%）</td>
+            <td>几乎不增肌（保肌）</td>
+            <td>快（接近遗传上限）</td>
+          </tr>
+          <tr>
+            <td>心理负担</td>
+            <td>低（无需严格计划切换）</td>
+            <td>高（饥饿感、训练质量下降）</td>
+            <td>中（允许吃更多，但需控制脂肪）</td>
+          </tr>
+          <tr>
+            <td>代谢适应风险</td>
+            <td>低</td>
+            <td>中高（减脂平台期常见）</td>
+            <td>低（正能量平衡维持代谢率）</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h2><span class="icon">🔄</span>分期训练的周期化方案</h2>
+      <div class="insight-box info">
+        <div class="icon">📅</div>
+        <div class="text">
+          <strong>经典分期策略（进阶训练者推荐）：</strong><br>
+          <strong>增肌期（Lean Bulk）：3-6个月</strong> → 目标体脂从10%增至15%（男），每周约+0.5%进食盈余<br>
+          <strong>减脂期（Cut）：8-12周</strong> → 将体脂从15%降回10%（男），保留绝大部分肌肉<br>
+          <strong>维持期：4-6周</strong> → 恢复代谢敏感性，再开启新周期<br><br>
+          <strong>小切割法（Mini Cut）：</strong>每隔一段时间用2-4周轻度热量亏缺，避免长期增肌期体脂积累过多，是目前较主流的进阶策略。
+        </div>
+      </div>
+
+      <div class="cycle-chart">
+        <svg width="100%" height="100%" viewBox="0 0 600 200">
+          <!-- Grid -->
+          <g stroke="#e0e0e0" stroke-width="1">
+            <line x1="50" y1="30" x2="50" y2="170"/>
+            <line x1="50" y1="170" x2="580" y2="170"/>
+            <line x1="50" y1="100" x2="580" y2="100"/>
+          </g>
+          <!-- Y Labels -->
+          <g font-size="10" fill="#666">
+            <text x="45" y="35" text-anchor="end">体脂15%</text>
+            <text x="45" y="105" text-anchor="end">体脂12%</text>
+            <text x="45" y="175" text-anchor="end">体脂10%</text>
+          </g>
+          <!-- X Labels -->
+          <g font-size="10" fill="#666" text-anchor="middle">
+            <text x="50" y="190">1月</text>
+            <text x="100" y="190">2月</text>
+            <text x="150" y="190">3月</text>
+            <text x="200" y="190">4月</text>
+            <text x="250" y="190">5月</text>
+            <text x="300" y="190">6月</text>
+            <text x="350" y="190">7月</text>
+            <text x="400" y="190">8月</text>
+            <text x="450" y="190">9月</text>
+            <text x="500" y="190">10月</text>
+            <text x="550" y="190">11月</text>
+            <text x="580" y="190">12月</text>
+          </g>
+          <!-- Fat line -->
+          <path d="M50,170 L100,165 L150,160 L200,155 L250,150 L300,140 L350,120 L400,105 L450,95 L500,90 L550,95 L580,100" 
+                fill="none" stroke="#FF6B6B" stroke-width="3"/>
+          <!-- Muscle line -->
+          <path d="M50,140 L100,135 L150,130 L200,125 L250,120 L300,115 L350,117 L400,120 L450,118 L500,110 L550,105 L580,100" 
+                fill="none" stroke="#4ECDC4" stroke-width="3" stroke-dasharray="5,3"/>
+          <!-- Legend -->
+          <g font-size="11">
+            <line x1="400" y1="40" x2="430" y2="40" stroke="#FF6B6B" stroke-width="3"/>
+            <text x="435" y="44" fill="#333">体脂率</text>
+            <line x1="400" y1="55" x2="430" y2="55" stroke="#4ECDC4" stroke-width="3" stroke-dasharray="5,3"/>
+            <text x="435" y="59" fill="#333">肌肉量(相对)</text>
+          </g>
+          <!-- Phase labels -->
+          <rect x="50" y="10" width="250" height="18" fill="#4ECDC430" rx="3"/>
+          <text x="175" y="22" text-anchor="middle" font-size="10" fill="#00897B">增肌期 (Lean Bulk)</text>
+          <rect x="300" y="10" width="150" height="18" fill="#FF6B6B30" rx="3"/>
+          <text x="375" y="22" text-anchor="middle" font-size="10" fill="#C62828">减脂期 (Cut)</text>
+          <rect x="450" y="10" width="130" height="18" fill="#FFA07A30" rx="3"/>
+          <text x="515" y="22" text-anchor="middle" font-size="10" fill="#E65100">维持期</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SECTION 5: 实操指南 ===== -->
+  <div id="summary" class="section">
+
+    <div class="card">
+      <h2><span class="icon">📋</span>决策树：我应该选择什么策略？</h2>
+      <div style="background:var(--light-bg);border-radius:12px;padding:24px;font-size:0.88em;line-height:2;">
+        <div style="text-align:center;font-size:1.1em;font-weight:700;margin-bottom:16px;color:var(--dark);">从你的当前状态出发 ↓</div>
+
+        <div style="display:flex;gap:20px;flex-wrap:wrap;">
+          <div style="flex:1;min-width:220px;background:white;border-radius:10px;padding:16px;border:2px solid #FF6B6B;">
+            <div style="font-weight:700;color:#FF6B6B;margin-bottom:8px;">🔴 体脂偏高</div>
+            <div style="color:var(--text-light);">男 ≥18% / 女 ≥28%</div>
+            <hr style="margin:10px 0;border-color:var(--border);">
+            <div><span class="tag red">首要任务：减脂</span></div>
+            <div style="margin-top:8px;">热量亏缺 -300~500kcal<br>保持力量训练（保肌）<br>蛋白质 ≥1.8g/kg<br>有氧辅助（2-3次/周）</div>
+          </div>
+
+          <div style="flex:1;min-width:220px;background:white;border-radius:10px;padding:16px;border:2px solid #6C63FF;">
+            <div style="font-weight:700;color:#6C63FF;margin-bottom:8px;">🟣 体脂适中（新手）</div>
+            <div style="color:var(--text-light);">男 15-20% / 女 22-28%，训练 &lt;1年</div>
+            <hr style="margin:10px 0;border-color:var(--border);">
+            <div><span class="tag purple">推荐：身体重组</span></div>
+            <div style="margin-top:8px;">热量±0 或轻微亏缺<br>力量训练为核心<br>蛋白质 ≥1.8g/kg<br>可期望同步减脂增肌</div>
+          </div>
+
+          <div style="flex:1;min-width:220px;background:white;border-radius:10px;padding:16px;border:2px solid #4ECDC4;">
+            <div style="font-weight:700;color:#00897B;margin-bottom:8px;">🟢 体脂理想（进阶）</div>
+            <div style="color:var(--text-light);">男 10-15% / 女 18-24%，训练 1年+</div>
+            <hr style="margin:10px 0;border-color:var(--border);">
+            <div><span class="tag green">推荐：分期增肌</span></div>
+            <div style="margin-top:8px;">Lean Bulk：+200~300kcal<br>蛋白质 1.6~2.0g/kg<br>碳水充足支持训练<br>周期性Mini Cut</div>
+          </div>
+
+          <div style="flex:1;min-width:220px;background:white;border-radius:10px;padding:16px;border:2px solid #FFA07A;">
+            <div style="font-weight:700;color:#E65100;margin-bottom:8px;">🟠 体脂偏低</div>
+            <div style="color:var(--text-light);">男 &lt;10% / 女 &lt;16%</div>
+            <hr style="margin:10px 0;border-color:var(--border);">
+            <div><span class="tag orange">不宜继续减脂</span></div>
+            <div style="margin-top:8px;">进入增肌期或维持<br>增加热量摄入<br>激素水平可能已受影响<br>需关注健康指标</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><span class="icon">🗓️</span>实操周计划模板</h2>
+      <div class="grid-2">
+        <div>
+          <div class="section-label">减脂期（推荐）</div>
+          <table class="compare-table" style="margin-top:10px;">
+            <thead><tr><th>训练日</th><th>内容</th><th>饮食重点</th></tr></thead>
+            <tbody>
+              <tr><td>周一</td><td>力量（推：胸/肩/三头）</td><td>训练后补碳水+蛋白</td></tr>
+              <tr><td>周二</td><td>LISS有氧 40-50min</td><td>低碳日，脂肪中等</td></tr>
+              <tr><td>周三</td><td>力量（拉：背/二头）</td><td>训练后补碳水+蛋白</td></tr>
+              <tr><td>周四</td><td>休息或轻有氧</td><td>低热量，高蛋白</td></tr>
+              <tr><td>周五</td><td>力量（腿：深蹲/硬拉）</td><td>训练前后最多碳水</td></tr>
+              <tr><td>周六</td><td>HIIT 20-30min</td><td>低碳日</td></tr>
+              <tr><td>周日</td><td>完全休息</td><td>饮食维持，充足蛋白</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <div class="section-label">增肌期（推荐）</div>
+          <table class="compare-table" style="margin-top:10px;">
+            <thead><tr><th>训练日</th><th>内容</th><th>饮食重点</th></tr></thead>
+            <tbody>
+              <tr><td>周一</td><td>力量（推：胸/肩/三头）</td><td>全天热量充足，高碳</td></tr>
+              <tr><td>周二</td><td>力量（拉：背/二头）</td><td>全天热量充足</td></tr>
+              <tr><td>周三</td><td>主动恢复（拉伸/走路）</td><td>适度控制热量</td></tr>
+              <tr><td>周四</td><td>力量（腿：深蹲/腿推）</td><td>训练前后最多碳水</td></tr>
+              <tr><td>周五</td><td>力量（推拉结合）</td><td>全天热量充足</td></tr>
+              <tr><td>周六</td><td>有氧（选做，30min LISS）</td><td>维持热量</td></tr>
+              <tr><td>周日</td><td>完全休息</td><td>适度减少热量</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><span class="icon">💊</span>关键营养素速查表</h2>
+      <div class="kpi-grid">
+        <div class="kpi-card protein-theme">
+          <div class="kpi-value">1.6~2.4</div>
+          <div class="kpi-label">蛋白质目标<br>g/kg体重/天<br>（两个阶段均适用）</div>
+        </div>
+        <div class="kpi-card carb-theme">
+          <div class="kpi-value">3~7</div>
+          <div class="kpi-label">碳水化合物<br>g/kg体重/天<br>（按训练量调整）</div>
+        </div>
+        <div class="kpi-card fat-theme">
+          <div class="kpi-value">20~35%</div>
+          <div class="kpi-label">脂肪占总热量<br>最低不少于15%<br>（保障激素合成）</div>
+        </div>
+        <div class="kpi-card muscle-theme">
+          <div class="kpi-value">-300~</div>
+          <div class="kpi-label">减脂热量亏缺<br>kcal/天<br>（不超过-500）</div>
+        </div>
+        <div class="kpi-card fat-theme">
+          <div class="kpi-value">+200~</div>
+          <div class="kpi-label">增肌热量盈余<br>kcal/天<br>（不超过+400）</div>
+        </div>
+        <div class="kpi-card protein-theme">
+          <div class="kpi-value">7~9h</div>
+          <div class="kpi-label">睡眠时间<br>GH分泌高峰<br>肌肉修复关键窗口</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><span class="icon">🔑</span>核心结论汇总</h2>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div class="insight-box info">
+          <div class="icon">1️⃣</div>
+          <div class="text"><strong>能量平衡是主导，宏量素比例是辅助：</strong>总热量决定"减重/增重"的方向，而碳氮脂比决定"你减的是脂还是肌、增的是肌还是脂"——两者缺一不可。</div>
+        </div>
+        <div class="insight-box success">
+          <div class="icon">2️⃣</div>
+          <div class="text"><strong>蛋白质是两个阶段的共同保障：</strong>无论减脂还是增肌，蛋白质充足（≥1.6g/kg）都是核心前提，其重要性远高于碳水和脂肪的精确比例。</div>
+        </div>
+        <div class="insight-box warning">
+          <div class="icon">3️⃣</div>
+          <div class="text"><strong>减脂增肌的生理矛盾是真实存在的：</strong>AMPK-mTOR互斥是生化事实，但新手、高体脂者可通过合理安排在一定程度上同步实现，进阶者效率较低。</div>
+        </div>
+        <div class="insight-box info">
+          <div class="icon">4️⃣</div>
+          <div class="text"><strong>力量训练是两个阶段的核心支柱：</strong>减脂期力量训练保肌、增加EPOC；增肌期力量训练直接刺激mTOR合成信号。有氧是辅助工具，而非主体。</div>
+        </div>
+        <div class="insight-box success">
+          <div class="icon">5️⃣</div>
+          <div class="text"><strong>进阶者推荐分期训练：</strong>分期（Lean Bulk + Cut）在相同时间内可获得比同步训练更多的净肌肉增量和更好的身体成分，但周期控制要避免体脂积累过多（超过18%/男）。</div>
+        </div>
+        <div class="insight-box danger">
+          <div class="icon">6️⃣</div>
+          <div class="text"><strong>睡眠和压力管理是被低估的变量：</strong>皮质醇慢性偏高（长期节食+训练过量+睡眠不足）是减脂停滞和增肌困难的常见隐因，与饮食训练同等重要。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  基于运动生理学与营养学文献综合分析 · 数据仅供参考，个体差异显著，建议结合专业指导
+</div>
+
+<script>
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+</body>
+</html>

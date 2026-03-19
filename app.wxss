@@ -1,0 +1,25 @@
+page {
+  --fat-color: #FF6B6B;
+  --muscle-color: #4ECDC4;
+  --protein-color: #45B7D1;
+  --carb-color: #FFA07A;
+  --dark: #2C3E50;
+  --light-bg: #F8F9FA;
+  --card-bg: #FFFFFF;
+  --accent: #6C63FF;
+  --text: #333;
+  --text-light: #666;
+  --border: #E0E0E0;
+  
+  font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.container {
+  padding: 10px;
+  padding-bottom: 30px;
+}
